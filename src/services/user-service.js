@@ -61,8 +61,26 @@ async function destroy(id)
     }
 }
 
+async function getUpdate(id, data) {
+    try {
+      const user = await userRepository.update(id, data);
+  
+      if (!user) {
+        throw new AppError("User not found", StatusCodes.NOT_FOUND);
+      }
+  
+      return user;
+    } catch (error) {
+      console.log(error);
+      throw new AppError(
+        "Error retrieving user",
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
 module.exports={
     create,
      getUsers,
-     destroy
+     destroy,
+     getUpdate
 }

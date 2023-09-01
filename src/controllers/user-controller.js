@@ -67,10 +67,28 @@ async function destroy(req,res)
                  .json(ErrorResponse)
     }
 }
+async function updateUser(req,res)
+{
+    try {
+        const response = await UserService.getUpdate(req.params.id,req.body);
+        SuccessResponse.data=response;
+        return res 
+                 .status(StatusCodes.OK)
+                 .json(SuccessResponse)
+                 
+    } catch (error) {
+        ErrorResponse.error=error;
+        return res 
+                 .status(error.statusCodes)
+                 .json(ErrorResponse)
+    }
+}
+
 
 
  module.exports={
     create,
     getUser,
-    destroy
+    destroy,
+    updateUser
  }
